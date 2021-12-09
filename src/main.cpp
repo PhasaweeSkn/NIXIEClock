@@ -1,74 +1,109 @@
 #include <Arduino.h>
 #include <WiFi.h>
 
-char *wifi_pass = "ABCDEFGH";
-char *wifi_ap_ssid = "HELLO_ESP32";
-char *wifi_ap_pass = "123456";
+
+
+//------------------------------- Local Library Include Start ------------------------------------//
+
+#include "web_page.hpp"
+#include "lamp_drive.hpp"
+
+//-------------------------------- Local Library Include End -------------------------------------//
+
+
+
+//--------------------------------- Defination Macro Start ---------------------------------------//
+
+#define SERIAL_BAUD   115200  // Console baud rate (use for debug)
+
+#define WIFI_AP_SSID  "HELLO_NIXIE"
+#define WIFI_AP_PASS  "Nixie01!"
+
+//--------------------------------- Defination Macro END------------------------------------------//
+
+
+
+//--------------------------------- Global Variable Start ----------------------------------------//
+
+char *wifi_pass = "123ABCabc!@#";
+
+TaskHandle_t taskUpdateLamp_handler;
+
+//--------------------------------- Global Variable End ------------------------------------------//
+
+
+
+//--------------------------------- Function Prototype Start -------------------------------------//
+
+uint8_t peripheral_init(void);
+
+//--------------------------------- Function Prototype End ---------------------------------------//
+
 
 
 void setup() {
 
-  // TODO: INIT PERIPHERAL
+  // TODO: To Complete INIT PERIPHERAL
+  peripheral_init();
 
   // TODO: LOAD PARM from internal memory
 
-  
-  Serial.begin(115200);
+  // TODO: WEB SERVER INIT
+  webserver_init();
 
-  WiFi.mode(WIFI_MODE_APSTA);
+  // TODO: OTHER TASK CREATE
 
-  WiFi.disconnect();
-  delay(100);
+  // TODO: To complete "TaskUpdateLamp"
+  xTaskCreatePinnedToCore(
+                  taskUpdateLamp,           /* Task function. */
+                  "TaskUpdateLamp",         /* name of task. */
+                  10000,                    /* Stack size of task */
+                  NULL,                     /* parameter of the task */
+                  1,                        /* priority of the task */
+                  &taskUpdateLamp_handler,  /* Task handle to keep track of created task */
+                  1);                       /* pin task to core 0 */          
 
-  int n = WiFi.scanNetworks();
-  Serial.println("scan done");
-  if (n == 0) {
-      Serial.println("no networks found");
-  } else {
-    Serial.print(n);
-    Serial.println(" networks found");
-    for (int i = 0; i < n; ++i) {
-      // Print SSID and RSSI for each network found
-      Serial.print(i + 1);
-      Serial.print(": ");
-      Serial.print(WiFi.SSID(i));
-      Serial.print(" (");
-      Serial.print(WiFi.RSSI(i));
-      Serial.print(")");
-      Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?" ":"*");
-      delay(10);
-    }
-  }
-  Serial.println("");
-
-  Serial.setTimeout(10000);
-  Serial.println("Choose SSID:");
-  String ssid = Serial.readString();
-  uint16_t index_ssid = ssid.toInt();
-  Serial.println("Press Password:");
-  String pass = Serial.readString();
-
-  Serial.println("SSID: " + WiFi.SSID(index_ssid - 1));
-
-  WiFi.softAP(wifi_ap_ssid,wifi_ap_pass);
-
-  WiFi.begin(ssid.c_str(),pass.c_str());
-//  WiFi.begin(WiFi.SSID(index_ssid - 1),"ABC");
-
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print('.');
-    delay(1000);
-  }
-
-  Serial.println(WiFi.localIP());
-
-  delay(5000);
 }
 
+
+
 void loop() {
-  // put your main code here, to run repeatedly:
-  Serial.println("Hello World");
+  taskYIELD();  //NOP
+}
 
-  delay(1000);
 
+
+// FUNCTION:    peripheral_init
+// DESCRIPTION: 
+//              Init ALL Peripheral, UART, I2C, WIFI,
+// PARAM:       NO ARGUMENT
+// RETURN:      UINT8, 1 = Complete Initial
+uint8_t peripheral_init(void) {
+
+  // UART INIT
+  Serial.begin(SERIAL_BAUD);
+
+  // TODO: PWM, I2C, WIFI (AP, STA)
+
+  return 1;
+
+}
+
+// FUNCTION:    wifi_init
+// DESCRIPTION: 
+//              Config WIFI; AP and STA
+// PARAM:       NO ARGUMENT
+// RETURN:      UINT8, 1 = Complete Initial
+uint8_t wifi_init(){
+
+  // Config WiFi as AP and STA mode
+  WiFi.mode(WIFI_MODE_APSTA);
+
+  // Config AP wifi
+  WiFi.softAP(WIFI_AP_SSID, WIFI_AP_PASS);
+
+  // TODO: STA config
+  // Ex. USE string arg; WiFi.begin(ssid.c_str(),pass.c_str());
+
+  return 1;
 }
