@@ -14,6 +14,6 @@ void taskUpdateLamp(void * pvParameters){
 
 
 uint8_t updateLamp(void){
-
+    return 0;
 
 }

@@ -25,8 +25,6 @@
 
 //--------------------------------- Global Variable Start ----------------------------------------//
 
-char *wifi_pass = "123ABCabc!@#";
-
 TaskHandle_t taskUpdateLamp_handler;
 
 //--------------------------------- Global Variable End ------------------------------------------//
