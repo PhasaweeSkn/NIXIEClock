@@ -59,4 +59,45 @@ Wire Wire Line
 	2100 2750 3100 2750
 Wire Wire Line
 	3100 2750 3100 2600
+$Comp
+L 74xx:74AHC595 U?
+U 1 1 61BE0AD2
+P 2450 4850
+F 0 "U?" H 2450 5631 50  0000 C CNN
+F 1 "74AHC595" H 2450 5540 50  0000 C CNN
+F 2 "" H 2450 4850 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/74AHC_AHCT595.pdf" H 2450 4850 50  0001 C CNN
+	1    2450 4850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2850 4450 3000 4450
+Wire Wire Line
+	3000 4450 3000 4000
+Wire Wire Line
+	3000 4000 2400 4000
+Wire Wire Line
+	2400 4000 2400 3600
+Wire Wire Line
+	2850 4550 3100 4550
+Wire Wire Line
+	3100 4550 3100 3850
+Wire Wire Line
+	3100 3850 2500 3850
+Wire Wire Line
+	2500 3850 2500 3600
+Wire Wire Line
+	2850 4650 3250 4650
+Wire Wire Line
+	3250 4650 3250 3700
+Wire Wire Line
+	3250 3700 2600 3700
+Wire Wire Line
+	2600 3700 2600 3600
+Wire Wire Line
+	2700 3600 3400 3600
+Wire Wire Line
+	3400 3600 3400 4750
+Wire Wire Line
+	3400 4750 2850 4750
 $EndSCHEMATC
