@@ -2,6 +2,14 @@
 // https://randomnerdtutorials.com/esp32-web-server-arduino-ide/
 // https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/
 
+
+/// Web INPUT ///
+///////////////////////////////////////////////////////////////////////////
+///////     SSID Name : Dropdown List  //////////////////////
+///////     Pass : Text box Password   //////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+
 #include "web_page.hpp"
 
 const char index_html[] PROGMEM = R"rawliteral(
