@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <WiFi.h>
-
+#include <WiFiClient.h>
+#include <WebServer.h>
+#include <ESPmDNS.h>
 
 
 //------------------------------- Local Library Include Start ------------------------------------//
@@ -26,6 +28,7 @@
 //--------------------------------- Global Variable Start ----------------------------------------//
 
 TaskHandle_t taskUpdateLamp_handler;
+WebServer server(80);
 
 //--------------------------------- Global Variable End ------------------------------------------//
 
@@ -48,7 +51,7 @@ void setup() {
 
   // TODO: WEB SERVER INIT
   webserver_init();
-
+  
   // TODO: OTHER TASK CREATE
 
   // TODO: To complete "TaskUpdateLamp"
@@ -60,7 +63,6 @@ void setup() {
                   1,                        /* priority of the task */
                   &taskUpdateLamp_handler,  /* Task handle to keep track of created task */
                   1);                       /* pin task to core 0 */          
-/AA WebDev//
 }
 
 

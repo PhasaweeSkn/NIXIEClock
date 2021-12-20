@@ -11,133 +11,121 @@
 
 
 #include "web_page.hpp"
+/* Login page */
+void webserver_init(){
+String loginIndex;
+String serverIndex;
+String serverIndex_1;
+String serverIndex_2;
+String serverSubmit;
 
-const char index_html[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html>
-<head>
-  <title>ESP Web Server</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="data:,">
-  <style>
-  html {
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-  }
-  h1 {
-    font-size: 1.8rem;
-    color: white;
-  }
-  h2{
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #143642;
-  }
-  .topnav {
-    overflow: hidden;
-    background-color: #143642;
-  }
-  body {
-    margin: 0;
-  }
-  .content {
-    padding: 30px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .card {
-    background-color: #F8F7F9;;
-    box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
-    padding-top:10px;
-    padding-bottom:20px;
-  }
-  .button {
-    padding: 15px 50px;
-    font-size: 24px;
-    text-align: center;
-    outline: none;
-    color: #fff;
-    background-color: #0f8b8d;
-    border: none;
-    border-radius: 5px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-   }
-   /*.button:hover {background-color: #0f8b8d}*/
-   .button:active {
-     background-color: #0f8b8d;
-     box-shadow: 2 2px #CDCDCD;
-     transform: translateY(2px);
-   }
-   .state {
-     font-size: 1.5rem;
-     color:#8c8c8c;
-     font-weight: bold;
-   }
-  </style>
-<title>ESP Web Server</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
-</head>
-<body>
-  <div class="topnav">
-    <h1>ESP WebSocket Server</h1>
-  </div>
-  <div class="content">
-    <div class="card">
-      <h2>Output - GPIO 2</h2>
-      <p class="state">state: <span id="state">%STATE%</span></p>
-      <p><button id="button" class="button">Toggle</button></p>
-    </div>
-  </div>
-<script>
-  var gateway = `ws://${window.location.hostname}/ws`;
-  var websocket;
-  window.addEventListener('load', onLoad);
-  function initWebSocket() {
-    console.log('Trying to open a WebSocket connection...');
-    websocket = new WebSocket(gateway);
-    websocket.onopen    = onOpen;
-    websocket.onclose   = onClose;
-    websocket.onmessage = onMessage; // <-- add this line
-  }
-  function onOpen(event) {
-    console.log('Connection opened');
-  }
-  function onClose(event) {
-    console.log('Connection closed');
-    setTimeout(initWebSocket, 2000);
-  }
-  function onMessage(event) {
-    var state;
-    if (event.data == "1"){
-      state = "ON";
-    }
-    else{
-      state = "OFF";
-    }
-    document.getElementById('state').innerHTML = state;
-  }
-  function onLoad(event) {
-    initWebSocket();
-    initButton();
-  }
-  function initButton() {
-    document.getElementById('button').addEventListener('click', toggle);
-  }
-  function toggle(){
-    websocket.send('toggle');
-  }
-</script>
-</body>
-</html>
-)rawliteral";
+loginIndex =
+  "<form name='loginForm'>"
+  "<table width='20%' bgcolor='A09F9F' align='center'>"
+  "<tr>"
+  "<td colspan=2>"
+  "<center><font size=4><b>ESP32 Login Page</b></font></center>"
+  "<br>"
+  "</td>"
+  "<br>"
+  "<br>"
+  "</tr>"
+  "<tr>"
+  "<td>Username:</td>"
+  "<td><input type='text' size=25 name='userid'><br></td>"
+  "</tr>"
+  "<br>"
+  "<br>"
+  "<tr>"
+  "<td>Password:</td>"
+  "<td><input type='Password' size=25 name='pwd'><br></td>"
+  "<br>"
+  "<br>"
+  "</tr>"
+  "<tr>"
+  "<td><input type='submit' onclick='check(this.form)' value='Login'></td>"
+  "</tr>"
+  "</table>"
+  "</form>"
+  "<script>"
+  "function check(form)"
+  "{"
+  "if(form.userid.value=='admin' && form.pwd.value=='admin')"
+  "{"
+  "window.open('/serverIndex')"
+  "}"
+  "else"
+  "{"
+  " alert('Error Password or Username')/*displays error message*/"
+  "}"
+  "}"
+  "</script>";
 
-uint8_t webserver_init(){
-    return 0;
+/* Server Index Page */
+serverIndex_1 =
+  "<form method='POST' action='submit' enctype='multipart/form-data' id='SSID_form'>"
+  "<table width=100% border='0' cellspacing='0' cellpadding='0'>"
+  "<tr>"
+  "<td align='center'>Selece SSID and Input Passphrase</td>"
+  "</tr>"
+  "</table>"
+  "<table width=100% border='0' cellspacing='0' cellpadding='0'>"
+  "<tr>"
+  "<td>"
+  "<label for='SSID_Name'>SSID Name : </label>"
+  "<select id='SSID_Name' name='SSID_Name'>"
+  ;
+serverIndex_2 =
+  "</select>"
+  "</tr>"
+  "<tr>"
+  "<td>"
+  "<label for='SSID_Passphrase'>Passphrase : </label>"
+  "<input id='SSID_Passphrase' type='password' size='40' name='SSID_Passphrase'/></td>"
+  "</tr>"
+  "</table>"
+  "<table width=100% border='0' cellspacing='0' cellpadding='0'>"
+  "<tr>"
+  "<td width=50% align='center'><input type='submit' value='Update'></td>"
+  "<td width=50% align='center'><input type='reset' value='Clear'></td>"
+  "</tr>"
+  "</table>"
+  "</form>"
+  ;
+
+  int n = WiFi.scanNetworks();
+  String serverIndex_SSID_List = "<option value=''>Select SSID</option>";
+  if (n == 0) {
+    serverIndex_SSID_List = "<option value=''>SSID not found</option>";
+  } else {
+    //serverIndex_SSID_List = "<option value=''>Select SSID</option>";
+    for (int i = 0; i < n; ++i) {
+      // Print SSID and RSSI for each network found
+      serverIndex_SSID_List = serverIndex_SSID_List + "<option value='"+ WiFi.SSID(i) +"'>" + WiFi.SSID(i) + ((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?"":" *") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[" + WiFi.RSSI(i) + "]</option>";
+    }
+  }
+  
+  serverIndex = serverIndex_1 + serverIndex_SSID_List + serverIndex_2;
+
+/* Server Submit Result Page */
+
+serverSubmit =
+  "It Worked!!!!"
+  ;
+
+    server.on("/", HTTP_GET, []() {
+    server.sendHeader("Connection", "close");
+    server.send(200, "text/html", loginIndex);
+  });
+  server.on("/serverIndex", HTTP_GET, []() {
+    server.sendHeader("Connection", "close");
+    server.send(200, "text/html", serverIndex);
+  });
+  /*handling uploading firmware file */
+  server.on("/submit", HTTP_POST, []() {
+    server.sendHeader("Connection", "close");
+    server.send(200, "text/html", serverSubmit);
+  });
+  server.begin();
 
 }
