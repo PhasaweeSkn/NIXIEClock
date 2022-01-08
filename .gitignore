@@ -19,6 +19,7 @@ _autosave-*
 *-rescue.lib
 *-save.pro
 *-save.kicad_pcb
+Circuit/NixieClock/NixieClock-backups
 
 # Netlist files (exported from Eeschema)
 *.net
