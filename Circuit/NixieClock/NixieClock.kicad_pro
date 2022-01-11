@@ -378,8 +378,10 @@
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
-        "name": "NIIXIE",
+        "name": "NIXIE",
         "nets": [
+          "/HV_DC",
+          "Net-(NE1-Pad1)",
           "Net-(NE1-Pad10)",
           "Net-(NE1-Pad11)",
           "Net-(NE1-Pad2)",
@@ -389,7 +391,9 @@
           "Net-(NE1-Pad6)",
           "Net-(NE1-Pad7)",
           "Net-(NE1-Pad8)",
-          "Net-(NE1-Pad9)"
+          "Net-(NE1-Pad9)",
+          "Net-(NE2-Pad1)",
+          "Net-(NE2-Pad2)"
         ],
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
